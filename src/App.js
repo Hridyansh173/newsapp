@@ -1,30 +1,34 @@
-import React, { Component } from 'react';
-import {HashRouter} from "react-router-dom";
-import {Route} from "react-router-dom";
-import {Routes} from "react-router-dom";
-
-import Navbar from './components/Navbar';
+import './App.css';
+import React, { useState } from 'react';
+import NavBar from './components/Navbar';
 import News from './components/News';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar';
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        <HashRouter>
-          <Navbar />
-          <Routes basename="/newswebapp">
-            {/* Redirect to the home route automatically */}
-            <Route path='/*' element={<News key='general' pageSize={5} country='in' category='general' />} />
-            <Route path='/home' element={<News key='general' pageSize={5} country='in' category='general' />} />
-            <Route path='/business' element={<News key='business' pageSize={5} country='us' category='business' />} />
-            <Route path='/entertainment' element={<News key='entertainment' pageSize={5} country='us' category='entertainment' />} />
-            <Route path='/health' element={<News key='health' pageSize={5} country='us' category='health' />} />
-            <Route path='/science' element={<News key='science' pageSize={5} country='us' category='science' />} />
-            <Route path='/sports' element={<News key='sports' pageSize={5} country='us' category='sports' />} />
-            <Route path='/technology' element={<News key='technology' pageSize={5} country='us' category='technology' />} />
-          </Routes>
-        </HashRouter>
-      </div>
-    );
-  }
-}
+const App = () => {
+  const pageSize = 5;
+  const apiKey = '6d3feff3b32445d79aa8517f966f59cb';
+  const [progress, setProgress] = useState(0);
+
+  return (
+    <div>
+      <Router>
+        <NavBar />
+        <LoadingBar height={3} color='#f11946' progress={progress} />
+        <Routes>
+  <Route path="/" element={<News setProgress={setProgress} apiKey={apiKey} key="general" pageSize={pageSize} country="in" category="general" />} />
+  <Route path="/business" element={<News setProgress={setProgress} apiKey={apiKey} key="business" pageSize={pageSize} country="in" category="business" />} />
+  <Route path="/entertainment" element={<News setProgress={setProgress} apiKey={apiKey} key="entertainment" pageSize={pageSize} country="in" category="entertainment" />} />
+  <Route path="/general" element={<News setProgress={setProgress} apiKey={apiKey} key="general" pageSize={pageSize} country="in" category="general" />} />
+  <Route path="/health" element={<News setProgress={setProgress} apiKey={apiKey} key="health" pageSize={pageSize} country="in" category="health" />} />
+  <Route path="/science" element={<News setProgress={setProgress} apiKey={apiKey} key="science" pageSize={pageSize} country="in" category="science" />} />
+  <Route path="/sports" element={<News setProgress={setProgress} apiKey={apiKey} key="sports" pageSize={pageSize} country="in" category="sports" />} />
+  <Route path="/technology" element={<News setProgress={setProgress} apiKey={apiKey} key="technology" pageSize={pageSize} country="in" category="technology" />} />
+</Routes>
+
+      </Router>
+    </div>
+  );
+};
+
+export default App;
